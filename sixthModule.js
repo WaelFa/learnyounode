@@ -1,11 +1,13 @@
 var fs = require('fs')
 const path = require('path')
 
-module.exports.result = (dirc, ext) => {
-    fs.readdir(process.argv[2], (err, data) => {
-        if (err) throw err;
+module.exports=function (dirc, ext, callback){
+    fs.readdir(dirc, (err, data) => {
+        if (err) return callback(err);
         else {
-            data.filter(el => (path.extname(el).toString() === '.' + process.argv[3])).forEach(el => console.log(el))
+            data = data.filter(el => (path.extname(el).toString() === '.' + ext))
+            return callback(null, data)
         }
     })
 }
+
